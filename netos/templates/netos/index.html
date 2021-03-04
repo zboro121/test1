@@ -1,0 +1,175 @@
+<!-- templates/netos/index.html -->
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>NetOS Tool</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap&subset=latin-ext"
+        rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'netos/style.css' %}"/>
+    <script src="https://kit.fontawesome.com/327a0d490c.js" crossorigin="anonymous"></script>
+</head>
+
+
+{% if messages %}
+    <ul>
+        {% for komunikat in messages %}
+            <li>{{ komunikat|capfirst }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% if not user.is_authenticated %}
+
+    <meta http-equiv="refresh" content="0; url=login"/>
+    {#          <div class="sign-in">#}
+    {#          <img src="/static/resources/logo.PNG"></br>#}
+    {##}
+    {#          <a type="button" class="btn" href="{% url 'netos:login' %}">Zaloguj się</a>#}
+    {#          </div>#}
+
+{% else %}
+<body>
+    <div class="panel">
+        <div class="row m-0 h-100">
+            <div class="col-2 p-0 px-4 panel-left">
+                <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container-fluid">
+            <img src="/static/resources/logo.PNG" height="60">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+                <section class="menu text-center">
+                    <a href="#" class="active">
+                        <div class="menu-item">
+                            <i class="fas fa-sliders-h"></i>
+                            <p>Home</p>
+                        </div>
+                    </a>
+                    <a href="posts.html">
+                        <div class="menu-item">
+                            <i class="far fa-comments"></i>
+                            <p>Network</p>
+                        </div>
+                    </a>
+                    <a href="users.html">
+                        <div class="menu-item">
+                            <i class="fas fa-user-friends"></i>
+                            <p>Users</p>
+                        </div>
+                    </a>
+                </section>
+                <section class="info-box text-light text-center mt-3">
+                    <h3>NetOS CMS</h3>
+                    <p class="text-muted">&copy; Copyright 2021</p>
+                </section>
+            </div>
+
+            <div class="col-10 p-0 panel-right">
+                <div class="col-9 mt-5">
+                    <section class="main-stats py-4 px-5 text-light text-center">
+                        <h1 class="mb-5">główne statystyki</h1>
+                        <div class="row mb-5">
+                            <div class="col-4">
+                                <div class="main-stat-box p-5 border">
+                                    <h3>postów</h3>
+                                    <p>Łącznie: 1.830.484</p>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="main-stat-box p-5 border">
+                                    <h3>tematów</h3>
+                                    <p>Łącznie: 1.830.484</p>
+                                </div>
+                            </div>
+                            <div class="col-4">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                <form class="d-flex">
+                          <span class="navbar-text">
+                              Jesteś zalogowany jako: <b>{{ user.username }}</b>
+                          </span>
+                    <a type="button" class="btn" href="{% url 'netos:logout' %}">Wyloguj</a>
+                </form>
+            </div>
+                            </div>
+                        </div>
+
+                        <div id="chart" class="py-5 text-dark"></div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endif %}
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous">
+    </script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+        var options = {
+            series: [{
+                name: 'Aktywni użytkownicy',
+                data: [31, 40, 28, 51, 42, 109, 100]
+            }, {
+                name: 'Ilość postów',
+                data: [11, 32, 45, 32, 34, 52, 41]
+            }],
+            chart: {
+                height: 350,
+                type: 'area',
+                'foreColor': '#fff'
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                curve: 'smooth'
+            },
+            xaxis: {
+                type: 'datetime',
+                categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z",
+                    "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z",
+                    "2018-09-19T06:30:00.000Z"
+                ]
+            },
+            tooltip: {
+                x: {
+                    format: 'dd/MM/yy HH:mm'
+                },
+            },
+            legend: {
+                show: false
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+    </script>
+</body>
+</html>
